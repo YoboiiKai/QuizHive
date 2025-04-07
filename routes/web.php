@@ -24,4 +24,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
+
+Route::get('/register', function () {
+    return Inertia::render('Auth/Register');
+})->name('register');
+
+// SuperAdmin Routes
+Route::middleware(['auth'])->prefix('superadmin')->group(function () {
+    // Quiz Management Routes
+    Route::get('/questionbank', fn () => Inertia::render('SuperAdmin/QuestionBank'))->name('superadmin.questionbank');
+    Route::get('/addquestion', fn () => Inertia::render('SuperAdmin/AddQuestion'))->name('superadmin.addquestion');
+    Route::get('/categories', fn () => Inertia::render('SuperAdmin/Categories'))->name('superadmin.categories');
+    Route::get('/questionsettings', fn () => Inertia::render('SuperAdmin/QuestionSettings'))->name('superadmin.questionsettings');
+    Route::get('/buzzersystem', fn () => Inertia::render('SuperAdmin/BuzzerSystem'))->name('superadmin.buzzersystem');
+});
+
 require __DIR__.'/auth.php';
